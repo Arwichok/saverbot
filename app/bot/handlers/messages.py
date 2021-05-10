@@ -10,18 +10,22 @@ from app.utils.constants import CONTENT_TYPES
 
 
 async def new_message(msg: atp.Message, session: AsyncSession):
-    file_id = ""
+    await msg.answer_chat_action("upload_document")
+    text = file_id = ""
     if msg.content_type == act.TEXT:
         text = msg.text
     else:
         text = msg.caption
         if msg.photo:
             file_id = msg.photo[-1].file_id
+        elif msg.audio and not msg.audio.title:
+            await msg.answer("I can't save Audio without Title")
+            return
         else:
             file_id = {
                 act.ANIMATION: msg.animation,
-                act.AUDIO: msg.audio,
                 act.DOCUMENT: msg.document,
+                act.AUDIO: msg.audio,
                 act.STICKER: msg.sticker,
                 act.VIDEO: msg.video,
                 act.VOICE: msg.voice,

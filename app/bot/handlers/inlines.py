@@ -47,8 +47,11 @@ def get_gif_result(msg: Message):
 
 
 def get_audio_result(msg: Message):
+    print(msg.file_id, msg.text)
     return InlineQueryResultCachedAudio(
-        id=msg.rowid, caption=msg.text, audio_file_id=msg.file_id
+        id=msg.rowid,
+        caption=msg.text,
+        audio_file_id=msg.file_id,
     )
 
 
