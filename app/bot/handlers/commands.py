@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.bot.markups.settings import settings_markup
 from app.models.message import Message
 from app.models.user import User
+from app.utils import config
 
 
 async def welcome(msg: atp.Message):
@@ -47,7 +48,8 @@ async def delete_all(msg: atp.Message, session: AsyncSession):
 
 def register(dp: Dispatcher):
     dp.register_message_handler(welcome, CommandStart())
-    dp.register_message_handler(users, commands="users", user_id=329398814)
+    dp.register_message_handler(users, commands="users",
+                                user_id=config.OWNER_ID)
     dp.register_message_handler(settings, commands="settings")
     dp.register_message_handler(delete_cmd, commands="del", is_reply=True)
     dp.register_message_handler(delete_all, commands="delete_all")
