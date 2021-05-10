@@ -45,11 +45,12 @@ async def clear_cmd(msg: atp.Message, session: AsyncSession):
 
 async def delete_cmd(msg: atp.Message, session: AsyncSession):
     reply_msg = msg.reply_to_message
-    await session.execute(delete(Message).where(and_(
-        Message.mid == reply_msg.message_id,
-        Message.uid == msg.from_user.id,
-    )))
-    await session.commit()
+    if reply_msg.content_type != atp.ContentType.TEXT:
+        await session.execute(delete(Message).where(and_(
+            Message.mid == reply_msg.message_id,
+            Message.uid == msg.from_user.id,
+        )))
+        await session.commit()
 
 
 async def delete_all(msg: atp.Message, session: AsyncSession):
