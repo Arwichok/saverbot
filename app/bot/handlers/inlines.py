@@ -55,7 +55,7 @@ def get_audio_result(msg: Message):
 def get_document_result(msg: Message):
     return InlineQueryResultCachedDocument(
         id=msg.rowid,
-        title=msg.text,
+        title=msg.text or "Document",
         document_file_id=msg.file_id,
         caption=msg.text
     )
@@ -84,7 +84,7 @@ def get_text_result(msg: Message):
 def get_video_result(msg: Message):
     return InlineQueryResultCachedVideo(
         id=msg.rowid,
-        title=msg.text,
+        title=msg.text or "Video",
         caption=msg.text,
         video_file_id=msg.file_id
     )
@@ -93,7 +93,7 @@ def get_video_result(msg: Message):
 def get_voice_result(msg: Message):
     return InlineQueryResultCachedVoice(
         id=msg.rowid,
-        title=msg.text,
+        title=msg.text or "Voice",
         caption=msg.text,
         voice_file_id=msg.file_id
     )

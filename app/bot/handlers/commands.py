@@ -14,7 +14,10 @@ from app.utils import config
 async def welcome(msg: atp.Message):
     await msg.answer("Hello, welcome to saver bot.\n"
                      "I save all your messages that you send me.\n"
-                     "Share messages with inline mode.")
+                     "Share messages with inline mode.\n\n"
+                     "Types: *g*if, *a*udio, *d*ocuments, *s*ticker, "
+                     "*p*hoto, *t*ext, *vo*ice",
+                     parse_mode="markdown")
 
 
 async def users(msg: atp.Message, session: AsyncSession):
