@@ -4,8 +4,8 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.message import Message
-from app.utils.bot import get_file_id, send_auto_delete
-from app.utils.constants import CONTENT_TYPES
+from app.bot.utils.messages import get_file_id, send_auto_delete
+from app.bot.utils.constants import CONTENT_TYPES
 
 
 async def new_message(msg: atp.Message, session: AsyncSession):
