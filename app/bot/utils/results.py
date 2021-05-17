@@ -6,7 +6,7 @@ from aiogram.types import ContentType, InlineQueryResultCachedGif, InlineQueryRe
 from app.models.message import Message
 
 
-def get_results(content_type: str, msgs) -> list[InlineQueryResult]:
+def get_results(content_type: str, msgs):
     return [{
         ContentType.ANIMATION: get_gif_result,
         ContentType.AUDIO: get_audio_result,

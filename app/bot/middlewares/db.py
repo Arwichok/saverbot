@@ -11,10 +11,10 @@ class DBMiddleware(LifetimeControllerMiddleware):
 
     async def pre_process(self, obj, data, *args):
         session = self.session()
-        await session.begin()
         assert isinstance(SESSION, str)
         data[SESSION] = session
 
     async def post_process(self, obj, data, *args):
-        if session := data[SESSION]:
+        session = data.get(SESSION)
+        if session:
             await session.close()

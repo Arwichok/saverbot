@@ -5,7 +5,7 @@ from app.bot.handlers import commands, messages, inlines, callbacks
 from app.bot.middlewares.acl import ACLMiddleware
 from app.bot.middlewares.db import DBMiddleware
 from app.bot.utils.commands import set_my_commands
-from app.models.db import init_session
+from app.models.db import init_session, init_engine, setup_models
 from app.utils import config
 from app.utils.logging import init_log
 
@@ -15,8 +15,12 @@ async def on_startup(dp: Dispatcher):
     commands.register(dp)
     inlines.register(dp)
     messages.register(dp)
+
     await set_my_commands(dp.bot)
-    session = await init_session(config.DB_URL)
+    engine = init_engine()
+    await setup_models(engine)
+    session = init_session(engine)
+
     dp.setup_middleware(DBMiddleware(session))
     dp.setup_middleware(ACLMiddleware())
 

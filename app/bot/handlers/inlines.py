@@ -13,14 +13,12 @@ async def search(iq: InlineQuery, session: AsyncSession, db_user: User):
     # Get content type by query or user default type
     content_type = CONTENT_TYPES.get(iq.query, db_user.default_type)
     # Get messages by content type
-    msgs = (await session.execute(
-        select(Message).where(
-            Message.uid == iq.from_user.id,
-            Message.type == content_type
-        )
-    )).scalars().all()
+    messages = (await session.execute(select(Message).where(
+        Message.uid == iq.from_user.id,
+        Message.type == content_type,
+    ))).scalars().all()
     # Write to `results` list of results by content type
-    results = get_results(content_type, msgs)
+    results = get_results(content_type, messages)
     await iq.answer(results, cache_time=1)
 
 

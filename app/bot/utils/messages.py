@@ -17,6 +17,10 @@ def get_file_id(msg: Message):
     return file.file_id if file else ""
 
 
+def get_text(msg: Message):
+    return msg.text or msg.caption or ""
+
+
 async def send_auto_delete(msg: Message, text: str, delay: float = 10):
     out_msg = await msg.answer(text)
     await asyncio.sleep(delay)

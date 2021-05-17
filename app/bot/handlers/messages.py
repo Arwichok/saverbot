@@ -1,10 +1,10 @@
 from aiogram import Dispatcher
 import aiogram.types as atp
-from sqlalchemy import select
+from sqlalchemy import update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.message import Message
-from app.bot.utils.messages import get_file_id, send_auto_delete
+from app.bot.utils.messages import get_file_id, send_auto_delete, get_text
 from app.bot.utils.constants import CONTENT_TYPES
 
 
@@ -13,7 +13,7 @@ async def new_message(msg: atp.Message, session: AsyncSession):
         mid=msg.message_id,
         uid=msg.from_user.id,
         type=msg.content_type,
-        text=msg.text or msg.caption or "",
+        text=get_text(msg),
         file_id=get_file_id(msg),
     ))
     await session.commit()
@@ -21,14 +21,15 @@ async def new_message(msg: atp.Message, session: AsyncSession):
 
 
 async def edit_message(msg: atp.Message, session: AsyncSession):
-    db_msg = (await session.execute(select(Message).where(
-        Message.uid == msg.from_user,
+    out = await session.execute(update(Message).where(
+        Message.uid == msg.from_user.id,
         Message.mid == msg.message_id,
-    ))).scalar()
-    if db_msg:
-        db_msg.text = msg.text or msg.caption or ""
-        db_msg.file_id = get_file_id(msg)
-        await session.commit()
+    ).values(
+        text=get_text(msg),
+        file_id=get_file_id(msg)
+    ))
+    await session.commit()
+    if out.rowcount:
         await msg.answer_chat_action(atp.ChatActions.TYPING)
 
 
