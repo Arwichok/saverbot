@@ -16,7 +16,7 @@ class DBMiddleware(LifetimeControllerMiddleware):
         session = self.session()
         await session.begin()
         data[SESSION] = session
-        if isinstance(obj, (Message, InlineQuery, CallbackQuery)):
+        if isinstance(obj, (Message, InlineQuery, CallbackQuery)) and obj.from_user:
             data["db_user"] = await User.create(session, obj.from_user)
 
     async def post_process(self, obj, data, *args):
