@@ -2,6 +2,7 @@ from aiogram import executor, Dispatcher
 
 from app.bot.dp import init_dp, init_bot
 from app.bot.handlers import commands, messages, inlines, callbacks
+from app.bot.middlewares.acl import ACLMiddleware
 from app.bot.middlewares.db import DBMiddleware
 from app.bot.utils.commands import set_my_commands
 from app.models.db import init_session
@@ -17,6 +18,7 @@ async def on_startup(dp: Dispatcher):
     await set_my_commands(dp.bot)
     session = await init_session(config.DB_URL)
     dp.setup_middleware(DBMiddleware(session))
+    dp.setup_middleware(ACLMiddleware())
 
 
 def main():

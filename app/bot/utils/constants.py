@@ -6,3 +6,5 @@ CONTENT_TYPES = dict(g=ContentType.ANIMATION, a=ContentType.AUDIO,
                      s=ContentType.STICKER, t=ContentType.TEXT,
                      v=ContentType.VIDEO, vo=ContentType.VOICE)
 DEF_TYPE = "def_type"
+DB_USER = "db_user"
+SESSION = "session"

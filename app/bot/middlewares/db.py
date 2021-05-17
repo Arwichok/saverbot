@@ -1,9 +1,6 @@
 from aiogram.dispatcher.middlewares import LifetimeControllerMiddleware
-from aiogram.types import Message, InlineQuery, CallbackQuery
 
-from app.models.user import User
-
-SESSION = "session"
+from app.bot.utils.constants import SESSION
 
 
 class DBMiddleware(LifetimeControllerMiddleware):
@@ -15,9 +12,8 @@ class DBMiddleware(LifetimeControllerMiddleware):
     async def pre_process(self, obj, data, *args):
         session = self.session()
         await session.begin()
+        assert isinstance(SESSION, str)
         data[SESSION] = session
-        if isinstance(obj, (Message, InlineQuery, CallbackQuery)) and obj.from_user:
-            data["db_user"] = await User.create(session, obj.from_user)
 
     async def post_process(self, obj, data, *args):
         if session := data[SESSION]:
