@@ -12,6 +12,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
     default_type = Column(String, default=atp.ContentType.TEXT)
+    language = Column(String, nullable=True)
 
     @classmethod
     async def create(cls, session: AsyncSession, tg_user: atp.User):
