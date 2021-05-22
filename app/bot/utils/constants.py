@@ -6,5 +6,10 @@ CONTENT_TYPES = dict(g=ContentType.ANIMATION, a=ContentType.AUDIO,
                      s=ContentType.STICKER, t=ContentType.TEXT,
                      v=ContentType.VIDEO, vo=ContentType.VOICE)
 DEF_TYPE = "def_type"
+SET_LANG = "set_lang"
 DB_USER = "db_user"
 SESSION = "session"
+AVAILABLE_LANGUAGES = {
+    "en": "🇺🇸 English",
+    "ru": "🇷🇺 Русский",
+}

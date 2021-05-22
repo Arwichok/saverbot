@@ -3,7 +3,7 @@ import asyncio
 from aiogram.types import ContentType as act, Message
 
 
-def get_file_id(msg: Message):
+def get_file(msg: Message):
     file = {
         act.ANIMATION: msg.animation,
         act.AUDIO: msg.audio,
@@ -14,7 +14,7 @@ def get_file_id(msg: Message):
         act.PHOTO: msg.photo,
     }.get(msg.content_type)
     file = file[-1] if msg.photo else file
-    return file.file_id if file else ""
+    return file
 
 
 def get_text(msg: Message):

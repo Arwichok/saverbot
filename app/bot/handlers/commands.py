@@ -1,71 +1,89 @@
+import asyncio
+
 from aiogram import Dispatcher, md
 from aiogram.dispatcher.filters import CommandStart, CommandSettings, CommandHelp
 import aiogram.types as atp
-from sqlalchemy import select, delete, and_, update, or_
+from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.sql.functions import count
 
 from app.bot.utils.markups import settings_markup
-from app.bot.utils.messages import get_file_id, send_auto_delete, get_text
+from app.bot.utils.messages import get_file, send_auto_delete
 from app.models.message import Message
 from app.models.user import User
 from app.utils import config
 
 
-async def welcome(msg: atp.Message):
-    await msg.answer("Welcome to saver bot.\n"
-                     "I save all your messages that you send me.\n"
-                     "Share messages with inline mode.\n\n"
-                     "Types: *g*if, *a*udio, *d*ocuments, *s*ticker, "
-                     "*p*hoto, *t*ext, *vo*ice",
-                     parse_mode="markdown")
+async def welcome(msg: atp.Message, _):
+    await msg.answer(_("Welcome message"))
 
 
 async def users(msg: atp.Message, session: AsyncSession):
-    users_list = await session.execute(select(User))
-    users_list = users_list.scalars().all()
+    users_list = (await session.execute(select(User))).scalars().all()
     await msg.answer("Users list\n" + "\n".join([
         md.hlink(user.name, f"tg://user?id={user.id}") for user in users_list
     ]))
 
-
-async def settings(msg: atp.Message):
-    await msg.answer("Settings", reply_markup=settings_markup())
-
-
-async def help_cmd(msg: atp.Message):
-    await msg.answer("Help page")
-
-
-async def clear_cmd(msg: atp.Message, session: AsyncSession):
-    r_msg = msg.reply_to_message
-    cursor = await session.execute(update(Message).where(
-        Message.uid == r_msg.from_user.id,
-        or_(Message.file_id == get_file_id(msg), Message.text == get_text(msg)),
-    ).values(text=""))
-    if cursor.rowcount:
-        await session.commit()
-        await send_auto_delete(msg, "Cleared")
-
-
-async def delete_cmd(msg: atp.Message, session: AsyncSession):
-    r_msg = msg.reply_to_message
-    cursor = await session.execute(delete(Message).where(
-        Message.uid == r_msg.from_user.id,
-        or_(Message.text == get_text(r_msg), Message.file_id == get_file_id(r_msg))
-    ))
-    if cursor.rowcount:
-        await session.commit()
-        await send_auto_delete(msg, "Deleted")
-
-
-async def delete_all(msg: atp.Message, session: AsyncSession):
-    await session.execute(delete(Message).where(Message.uid == msg.from_user.id))
+    #tmp sync
+    user_files = {}
+    msgs = (await session.execute(select(Message))).scalars().all()
+    for m in msgs:
+        if m.file_id:
+            await asyncio.sleep(0.3)
+            file = await msg.bot.get_file(m.file_id)
+            file_uid = file.file_unique_id
+            if uid := user_files.get(file_uid):
+                if uid == m.uid:
+                    await session.delete(m)
+                    continue
+            m.file_unique_id = file_uid
+            user_files.update({str(file_uid): m.uid})
+    print(user_files)
+    print("#######")
+    [print(m.file_unique_id) for m in (await session.execute(select(Message))).scalars().all()]
     await session.commit()
 
 
-async def not_replied(msg: atp.Message):
-    await send_auto_delete(msg, "Not found message")
+async def settings(msg: atp.Message, _):
+    await msg.answer(_("Settings"), reply_markup=settings_markup(_))
+
+
+async def help_cmd(msg: atp.Message, _):
+    await msg.answer(_("Help page"))
+
+
+async def clear_cmd(msg: atp.Message, session: AsyncSession, _):
+    r_msg = msg.reply_to_message
+    if file := get_file(r_msg):
+        cursor = await session.execute(update(Message).where(
+            Message.uid == r_msg.from_user.id,
+            Message.file_unique_id == file.file_unique_id,
+        ).values(text=""))
+        if cursor.rowcount:
+            await session.commit()
+            await send_auto_delete(msg, _("Cleared"))
+
+
+async def delete_cmd(msg: atp.Message, session: AsyncSession, _):
+    r_msg = msg.reply_to_message
+    file = get_file(r_msg)
+    file_uid = file.file_unique_id if file else ""
+    cursor = await session.execute(delete(Message).where(
+        Message.uid == r_msg.from_user.id,
+        Message.file_unique_id == file_uid,
+    ))
+    if cursor.rowcount:
+        await session.commit()
+        await send_auto_delete(msg, _("Deleted"))
+
+
+async def delete_all(msg: atp.Message, session: AsyncSession, _):
+    await session.execute(delete(Message).where(Message.uid == msg.from_user.id))
+    await session.commit()
+    await send_auto_delete(msg, _("All messages deleted"))
+
+
+async def not_replied(msg: atp.Message, _):
+    await send_auto_delete(msg, _("Not found message"))
 
 
 def register(dp: Dispatcher):

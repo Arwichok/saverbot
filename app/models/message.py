@@ -11,3 +11,4 @@ class Message(Base):
     type = Column(String)
     text = Column(String)
     file_id = Column(String)
+    file_unique_id = Column(String)

@@ -4,8 +4,9 @@ from app.bot.dp import init_dp, init_bot
 from app.bot.handlers import commands, messages, inlines, callbacks
 from app.bot.middlewares.acl import ACLMiddleware
 from app.bot.middlewares.db import DBMiddleware
+from app.bot.middlewares.i18n import I18nMiddleware
 from app.bot.utils.commands import set_my_commands
-from app.models.db import init_session, init_engine, setup_models
+from app.models.db import init_session, init_engine
 from app.utils import config
 from app.utils.logging import init_log
 
@@ -18,11 +19,12 @@ async def on_startup(dp: Dispatcher):
 
     await set_my_commands(dp.bot)
     engine = init_engine()
-    await setup_models(engine)
     session = init_session(engine)
 
     dp.setup_middleware(DBMiddleware(session))
     dp.setup_middleware(ACLMiddleware())
+    dp["i18n"] = I18nMiddleware(config.I18N_DOMAIN, config.LOCALES_DIR)
+    dp.setup_middleware(dp["i18n"])
 
 
 def main():
