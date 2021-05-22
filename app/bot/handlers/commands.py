@@ -23,25 +23,6 @@ async def users(msg: atp.Message, session: AsyncSession):
         md.hlink(user.name, f"tg://user?id={user.id}") for user in users_list
     ]))
 
-    #tmp sync
-    user_files = {}
-    msgs = (await session.execute(select(Message))).scalars().all()
-    for m in msgs:
-        if m.file_id:
-            await asyncio.sleep(0.3)
-            file = await msg.bot.get_file(m.file_id)
-            file_uid = file.file_unique_id
-            if uid := user_files.get(file_uid):
-                if uid == m.uid:
-                    await session.delete(m)
-                    continue
-            m.file_unique_id = file_uid
-            user_files.update({str(file_uid): m.uid})
-    print(user_files)
-    print("#######")
-    [print(m.file_unique_id) for m in (await session.execute(select(Message))).scalars().all()]
-    await session.commit()
-
 
 async def settings(msg: atp.Message, _):
     await msg.answer(_("Settings"), reply_markup=settings_markup(_))

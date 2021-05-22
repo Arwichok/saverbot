@@ -1,0 +1,98 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# arwichok <arwichok@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-05-21 10:05+0300\n"
+"PO-Revision-Date: 2021-05-21 10:11+0300\n"
+"Last-Translator: arwichok <arwichok@gmail.com>\n"
+"Language: ru\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
+"=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+"X-Generator: Lokalize 21.04.1\n"
+
+#: app/bot/handlers/callbacks.py:20
+msgid "Changed to {c_type}"
+msgstr "Стандартный тип {c_type}"
+
+#: app/bot/handlers/callbacks.py:29 app/bot/handlers/commands.py:27
+msgid "Settings"
+msgstr "Настройки"
+
+#: app/bot/handlers/commands.py:15
+msgid "Welcome message"
+msgstr ""
+"Этот бот поможет вам сохранять сообщения и отправлять их через инлай мод \n"
+"Подробнее /help\n"
+"Настройки /settings"
+
+#: app/bot/handlers/commands.py:31
+msgid "Help page"
+msgstr ""
+"Типы при вводе в инлайн, в настройка можете указать стандартный тип: \n"
+"t  Text\n"
+"p  Photo\n"
+"a  Audio\n"
+"g  Animation/Gif\n"
+"d  Document\n"
+"s  Sticker\n"
+"v  Video\n"
+"vo Voice\n"
+"/clear - удаляет подпись у отвеченых медиа. \n"
+"/del - удаляет сообщение из базы данных. \n"
+"/delete_all - удаляет все ваши сообщения из БД"
+
+#: app/bot/handlers/commands.py:42
+msgid "Cleared"
+msgstr "Чисто"
+
+#: app/bot/handlers/commands.py:53
+msgid "Deleted"
+msgstr "Удалено"
+
+#: app/bot/handlers/commands.py:59
+msgid "All messages deleted"
+msgstr "Все сообщения удалены"
+
+#: app/bot/handlers/commands.py:63
+msgid "Not found message"
+msgstr "Сообщение не найдено"
+
+#: app/bot/handlers/messages.py:23
+msgid "Saved"
+msgstr "Сохранено"
+
+#: app/bot/handlers/messages.py:44
+msgid "I ignore my messages"
+msgstr "Я игнорирую свои сообщения"
+
+#: app/bot/handlers/messages.py:46
+msgid "I can't save audio without title field"
+msgstr "Я не могу сохранить аудио без поля Title"
+
+#: app/bot/handlers/messages.py:48
+msgid "Video mime type not valid"
+msgstr "Mime-type видео не валидно"
+
+#: app/bot/handlers/messages.py:52
+msgid "Media exists"
+msgstr "Медиа существует"
+
+#: app/bot/utils/markups.py:17
+msgid "Default type"
+msgstr "Стандартный тип"
+
+#: app/bot/utils/markups.py:18
+msgid "Language"
+msgstr "Язык"
+

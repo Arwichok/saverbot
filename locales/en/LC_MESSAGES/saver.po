@@ -1,0 +1,97 @@
+# English translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+# arwichok <arwichok@gmail.com>, 2021.
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-05-21 10:05+0300\n"
+"PO-Revision-Date: 2021-05-21 10:10+0300\n"
+"Last-Translator: arwichok <arwichok@gmail.com>\n"
+"Language: en\n"
+"Language-Team: English <kde-i18n-doc@kde.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.0\n"
+"X-Generator: Lokalize 21.04.1\n"
+
+#: app/bot/handlers/callbacks.py:20
+msgid "Changed to {c_type}"
+msgstr "Changed to {c_type}"
+
+#: app/bot/handlers/callbacks.py:29 app/bot/handlers/commands.py:27
+msgid "Settings"
+msgstr "Settings"
+
+#: app/bot/handlers/commands.py:15
+msgid "Welcome message"
+msgstr ""
+"This helped you to save messages and share with inline mode: "
+"/help "
+"/settings"
+
+#: app/bot/handlers/commands.py:31
+msgid "Help page"
+msgstr ""
+"Types for filter in inline mode:\n"
+"t  Text\n"
+"p  Photo\n"
+"a  Audio\n"
+"g  Animation/Gif\n"
+"d  Document\n"
+"s  Sticker\n"
+"v  Video\n"
+"vo Voice\n"
+"/clear - clear caption in replied messages\n"
+"/del - deleting message \n"
+"/delete_all - deleting ALL your messages"
+
+#: app/bot/handlers/commands.py:42
+msgid "Cleared"
+msgstr "Cleared"
+
+#: app/bot/handlers/commands.py:53
+msgid "Deleted"
+msgstr "Deleted"
+
+#: app/bot/handlers/commands.py:59
+msgid "All messages deleted"
+msgstr "All messages deleted"
+
+#: app/bot/handlers/commands.py:63
+msgid "Not found message"
+msgstr "Not found message"
+
+#: app/bot/handlers/messages.py:23
+msgid "Saved"
+msgstr "Saved"
+
+#: app/bot/handlers/messages.py:44
+msgid "I ignore my messages"
+msgstr "I ignore my messages"
+
+#: app/bot/handlers/messages.py:46
+msgid "I can't save audio without title field"
+msgstr "I can't save audio without title field"
+
+#: app/bot/handlers/messages.py:48
+msgid "Video mime type not valid"
+msgstr "Video mime type not valid"
+
+#: app/bot/handlers/messages.py:52
+msgid "Media exists"
+msgstr "Media exists"
+
+#: app/bot/utils/markups.py:17
+msgid "Default type"
+msgstr "Default type"
+
+#: app/bot/utils/markups.py:18
+msgid "Language"
+msgstr "Language"
+
