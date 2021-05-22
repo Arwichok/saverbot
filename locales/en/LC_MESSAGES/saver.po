@@ -32,7 +32,7 @@ msgstr "Settings"
 msgid "Welcome message"
 msgstr ""
 "This bot saved your messages and you can share with inline mode:\n"
-"Detalis /help\n"
+"Details /help\n"
 "Settings /settings"
 
 #: app/bot/handlers/commands.py:31
