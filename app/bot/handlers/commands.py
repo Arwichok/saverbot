@@ -1,5 +1,3 @@
-import asyncio
-
 from aiogram import Dispatcher, md
 from aiogram.dispatcher.filters import CommandStart, CommandSettings, CommandHelp
 import aiogram.types as atp
