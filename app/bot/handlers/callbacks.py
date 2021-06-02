@@ -11,6 +11,7 @@ from app.bot.utils.constants import CONTENT_TYPES, DEF_TYPE, SET_LANG, AVAILABLE
 
 async def default_type_page(cb: CallbackQuery, db_user: User):
     await cb.message.edit_reply_markup(content_types_markup(db_user.default_type))
+    await cb.answer()
 
 
 async def content_type_callback(cb: CallbackQuery, session: AsyncSession, callback_data: dict, _):
@@ -31,6 +32,7 @@ async def language_callback(cb: CallbackQuery, session: AsyncSession, callback_d
 
 async def set_lang_callback(cb: CallbackQuery, db_user, _):
     await cb.message.edit_reply_markup(language_markup(db_user.language))
+    await cb.answer()
 
 
 def register(dp: Dispatcher):
